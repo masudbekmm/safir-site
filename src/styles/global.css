@@ -133,7 +133,7 @@ p { margin: 0 0 1em; max-width: 62ch; }
 .splash { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; background: var(--blue); animation: splashOut .7s cubic-bezier(.7,0,.3,1) 2s forwards; }
 .splash-inner { display: flex; align-items: center; gap: clamp(.9rem, 2.5vw, 1.6rem); }
 .splash-emblem { width: clamp(72px, 12vw, 120px); aspect-ratio: 1; background: var(--white); -webkit-mask: url('/emblem.png') center / contain no-repeat; mask: url('/emblem.png') center / contain no-repeat; animation: splashEmblem .9s cubic-bezier(.2,.7,.2,1) .15s both; }
-.splash-word { display: block; overflow: hidden; width: clamp(150px, 25vw, 252px); animation: splashWord .8s cubic-bezier(.2,.7,.2,1) .85s both; }
+.splash-word { display: block; overflow: hidden; width: clamp(131px, 21.8vw, 220px); animation: splashWord .8s cubic-bezier(.2,.7,.2,1) .85s both; }
 .splash-word img { width: 100%; height: auto; }
 @keyframes splashEmblem { from { opacity: 0; transform: scale(.55) rotate(-120deg); } }
 @keyframes splashWord { from { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateX(-14px); } to { opacity: 1; clip-path: inset(0 0 0 0); transform: none; } }
