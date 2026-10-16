@@ -10,7 +10,7 @@ export const company = {
   phoneHref: '+998907570024', // digits only, with country code
   phone2: '+998 91 161 05 05',
   phone2Href: '+998911610505',
-  email: 'safir-textile@mail.ru',
+  email: 'info@safir.uz',
   legalName: 'Boqiy Ravon Tekstil LLC', // from the company profile
   founded: 2018,
   contactPerson: { name: 'Pozilov Abdullajon', phone: '+998 91 161 05 05', phoneHref: '+998911610505' },
