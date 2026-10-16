@@ -13,7 +13,7 @@ const { lang, page = '', title, description, schema = false } = Astro.props;
 
 const abs = (l: Lang) => company.url + path(l, page);
 const canonical = abs(lang);
-const ogImage = `${company.url}/og.jpg`;
+const ogImage = `${company.url}/og.jpg?v=2`; // bump ?v= when og.jpg changes so Telegram etc. refetch it
 
 const ld = {
   '@context': 'https://schema.org',
