@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-white.png';
+import { path, navHref, type Lang } from '../i18n';
+import { company } from '../data/company';
+import { nav, ui } from '../data/content';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="site-footer panel on-dark">
+  <div class="wrap foot">
+    <div>
+      <a class="brand" href={path(lang)}><Image src={logo} alt={company.name} height={88} densities={[1, 2]} /></a>
+      <p style="margin-top:1rem;max-width:34ch">{ui.tagline[lang]}</p>
+    </div>
+    <div>
+      <h2>{ui.pages[lang]}</h2>
+      <ul>
+        {nav.map((n) => <li><a href={navHref(lang, n.key)}>{n.label[lang]}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <h2>{ui.contactTitle[lang]}</h2>
+      <ul>
+        <li><a href={`tel:${company.phoneHref}`}>{company.phone}</a></li>
+        <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
+        <li><a href={company.telegram} rel="noopener" target="_blank">Telegram</a></li>
+        <li><a href={company.instagram} rel="noopener" target="_blank">Instagram</a></li>
+        <li><a href={company.mapUrl} rel="noopener" target="_blank">{company.address[lang]}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap legal">© {year} {company.name}. {ui.rights[lang]}</div>
+</footer>

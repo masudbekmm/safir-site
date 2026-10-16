@@ -1,0 +1,84 @@
+---
+import '@fontsource-variable/onest';
+import '../styles/global.css';
+import { langs, defaultLang, htmlLang, ogLocale, path, type Lang } from '../i18n';
+import { company } from '../data/company';
+import { ui } from '../data/content';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Contact from '../components/Contact.astro';
+
+interface Props { lang: Lang; page?: string; title: string; description: string; schema?: boolean }
+const { lang, page = '', title, description, schema = false } = Astro.props;
+
+const abs = (l: Lang) => company.url + path(l, page);
+const canonical = abs(lang);
+const ogImage = `${company.url}/og.jpg`;
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: company.name,
+  url: company.url,
+  logo: `${company.url}/logo.png`,
+  email: company.email,
+  telephone: company.phone,
+  address: { '@type': 'PostalAddress', addressCountry: 'UZ', addressRegion: 'Andijan', addressLocality: 'Jalaquduq' },
+  geo: { '@type': 'GeoCoordinates', latitude: company.lat, longitude: company.lng },
+  sameAs: [company.instagram, company.telegram],
+};
+---
+<!doctype html>
+<html lang={htmlLang[lang]}>
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      // Opening splash: only on the first page of a visit
+      try { if (sessionStorage.getItem('safir-splash')) document.documentElement.classList.add('no-splash'); else sessionStorage.setItem('safir-splash', '1'); } catch (e) {}
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0237b9" />
+    <link rel="canonical" href={canonical} />
+    {langs.map((l) => <link rel="alternate" hreflang={htmlLang[l]} href={abs(l)} />)}
+    <link rel="alternate" hreflang="x-default" href={abs(defaultLang)} />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={company.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={ogLocale[lang]} />
+    {langs.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={ogLocale[l]} />)}
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}
+  </head>
+  <body class:list={{ home: page === '' }}>
+    <div class="splash" aria-hidden="true">
+      <div class="splash-inner">
+        <span class="splash-emblem"></span>
+        <span class="splash-word"><img src="/wordmark-white.png" alt="" width="701" height="252" /></span>
+      </div>
+    </div>
+    <a class="skip" href="#main">{ui.skip[lang]}</a>
+    <Header lang={lang} page={page} />
+    <main id="main"><slot /><Contact lang={lang} /></main>
+    <Footer lang={lang} />
+    <script>
+      // Fade sections in as they scroll into view
+      const items = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      }, { rootMargin: '0px 0px -8% 0px' });
+      items.forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

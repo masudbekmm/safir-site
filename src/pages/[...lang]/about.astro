@@ -1,0 +1,126 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { langPaths, type Lang } from '../../i18n';
+import { about, seo } from '../../data/content';
+import { company } from '../../data/company';
+import SalesMap from '../../components/SalesMap.astro';
+
+export function getStaticPaths() { return langPaths(); }
+const { lang } = Astro.props as { lang: Lang };
+---
+<Base lang={lang} page="about" title={seo.about.title[lang]} description={seo.about.description[lang]}>
+  <div class="wrap page-head">
+    <h1>{about.title[lang]}</h1>
+    <div class="kicker"><span>Safir</span></div>
+  </div>
+  <section class="wrap section">
+    <div class="about-grid">
+      <div>
+        <p class="lead">{about.lead[lang]}</p>
+        <p>{about.body[lang]}</p>
+        <h2 style="margin-top:2.5rem">{about.valuesTitle[lang]}</h2>
+        <dl class="why-list">
+          {about.values.map((v) => <div><dt>{v.t[lang]}</dt><dd>{v.d[lang]}</dd></div>)}
+        </dl>
+      </div>
+      <div class="about-photo">
+        <Photo name="factory-line" alt={about.photoAlt[lang]} tone="cream" sizes="(max-width: 880px) 100vw, 480px" widths={[400, 600, 900]} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Production capacity -->
+  <section class="capacity on-dark">
+    <div class="wrap section">
+      <p class="eyebrow reveal">{about.capacity.label[lang]}</p>
+      <h2 class="big reveal">{about.capacity.title[lang]}</h2>
+      <ul class="cap-grid">
+        {about.capacity.items.map((c, i) => (
+          <li class="reveal" style={`--d:${i * 80}ms`}><strong>{c.v[lang]}</strong><span>{c.l[lang]}</span></li>
+        ))}
+      </ul>
+      <p class="cap-note reveal">{about.capacity.note[lang]}</p>
+    </div>
+  </section>
+
+  <!-- Production cycle -->
+  <section class="wrap section">
+    <p class="eyebrow reveal">{about.cycle.label[lang]}</p>
+    <h2 class="big reveal">{about.cycle.title[lang]}</h2>
+    <ol class="cycle">
+      {about.cycle.steps.map((step, i) => (
+        <li class="reveal">
+          <span class="cycle-num">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{step[lang]}</h3>
+          <div class="cycle-photo">
+            <Photo name={`cycle-${i + 1}`} alt={step[lang]} tone={['cream', 'blue', 'cream', 'blue', 'cream', 'blue'][i]} sizes="(max-width: 760px) 100vw, 560px" widths={[480, 720, 1120]} />
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- Equipment, ERP and expertise (profile p.7) -->
+  <section class="soft-band">
+    <div class="wrap section">
+      <p class="eyebrow reveal">{about.equipment.label[lang]}</p>
+      <h2 class="big reveal">{about.equipment.title[lang]}</h2>
+      <div class="equip">
+        <div class="equip-photo reveal">
+          <Photo name="equipment" alt={about.equipment.photoAlt[lang]} tone="blue" sizes="(max-width: 880px) 100vw, 560px" widths={[480, 720, 1100]} />
+        </div>
+        <dl class="equip-list">
+          {about.equipment.items.map((it, i) => (
+            <div class="reveal" style={`--d:${i * 70}ms`}><dt>{typeof it.t === 'string' ? it.t : it.t[lang]}</dt><dd>{it.d[lang]}</dd></div>
+          ))}
+        </dl>
+      </div>
+      <p class="note-box reveal">{about.equipment.note[lang]}</p>
+    </div>
+  </section>
+
+  <!-- Quality at every stage (profile p.8) -->
+  <section class="wrap section">
+    <p class="eyebrow reveal">{about.quality.label[lang]}</p>
+    <h2 class="big reveal">{about.quality.title[lang]}</h2>
+    <div class="qual">
+      {about.quality.items.map((q) => (
+        <div class="qual-row reveal">
+          <div class="qual-photo"><Photo name={q.photo} alt={q.alt[lang]} tone="cream" sizes="(max-width: 760px) 100vw, 520px" widths={[480, 720, 1040]} /></div>
+          <div><h3>{q.t}</h3><p>{q.d[lang]}</p></div>
+        </div>
+      ))}
+    </div>
+    <p class="qual-strip reveal">{about.quality.strip[lang]}</p>
+  </section>
+
+  <!-- Sales geography and contacts (profile p.9) -->
+  <section class="sales on-dark">
+    <div class="wrap section">
+      <h2 class="big reveal">{about.sales.title[lang]}</h2>
+      <SalesMap lang={lang} />
+      <div class="sales-grid">
+        <div>
+          <ol class="countries">
+            {about.sales.countries.map((c, i) => <li class="reveal" style={`--d:${i * 90}ms`} data-c={['ru', 'ua', 'kz'][i]}><span>{String(i + 1).padStart(2, '0')}</span>{c[lang]}</li>)}
+          </ol>
+        </div>
+        <div class="sales-card reveal">
+          <p class="eyebrow">{about.sales.contactsTitle[lang]}</p>
+          <p class="sales-company">{company.legalName}</p>
+          <p>{company.address[lang]}</p>
+          <p class="sales-lines">
+            <a href={`tel:${company.phoneHref}`}>{company.phone}</a>
+            <a href={`tel:${company.phone2Href}`}>{company.phone2}</a>
+            <a href={`mailto:${company.email}`}>{company.email}</a>
+          </p>
+          <p class="eyebrow" style="margin-top:2rem">{about.sales.personTitle[lang]}</p>
+          <p class="sales-company">{company.contactPerson.name}</p>
+          <p><a href={`tel:${company.contactPerson.phoneHref}`}>{company.contactPerson.phone}</a></p>
+        </div>
+      </div>
+      <p class="sales-since">{about.sales.since[lang]}</p>
+    </div>
+  </section>
+</Base>

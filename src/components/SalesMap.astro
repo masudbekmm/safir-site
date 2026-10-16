@@ -1,0 +1,51 @@
+---
+// Static vector map of sales markets. Shapes come from src/data/sales-map.ts (generated from Natural Earth).
+// Hover or focus a country (or its name in the list next to the map) to show its name.
+import type { Lang } from '../i18n';
+import { salesMap as m } from '../data/sales-map';
+import { about } from '../data/content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const keys = ['ru', 'ua', 'kz'] as const; // same order as about.sales.countries
+const home = { uz: 'Safir · Andijon', ru: 'Safir · Андижан', en: 'Safir · Andijan' }[lang];
+
+// gentle curve from Andijan to each market
+const arc = ([x1, y1]: readonly number[], [x2, y2]: readonly number[]) => {
+  const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, dx = x2 - x1, dy = y2 - y1;
+  return `M${x1},${y1} Q${Math.round(mx + dy * 0.25)},${Math.round(my - dx * 0.25)} ${x2},${y2}`;
+};
+---
+<figure class="smap reveal">
+  <svg viewBox={m.viewBox} role="group" aria-label={about.sales.title[lang]}>
+    <path class="sm-context" d={m.context} />
+    <path class="sm-uz" d={m.uz.d} />
+    {keys.map((k, i) => (
+      <g class="sm-country" data-c={k} tabindex="0" role="img" aria-label={about.sales.countries[i][lang]}>
+        <path d={m.countries[k].d} />
+      </g>
+    ))}
+    {keys.map((k, i) => <path class="sm-arc" d={arc(m.home, m.targets[k])} style={`--d:${i * 0.4}s`} />)}
+    {keys.map((k) => <circle class="sm-dot" cx={m.targets[k][0]} cy={m.targets[k][1]} r="5" />)}
+    <circle class="sm-pulse" cx={m.home[0]} cy={m.home[1]} r="9" />
+    <circle class="sm-home" cx={m.home[0]} cy={m.home[1]} r="7" />
+    <text class="sm-home-label" x={m.home[0] + 16} y={m.home[1] + 6}>{home}</text>
+    {keys.map((k, i) => (
+      <text class="sm-label" data-c={k} x={m.countries[k].label[0]} y={m.countries[k].label[1]} text-anchor="middle">{about.sales.countries[i][lang]}</text>
+    ))}
+  </svg>
+</figure>
+
+<script>
+  // Hovering a country name in the list lights up that country on the map, and the other way round
+  const map = document.querySelector('.smap');
+  const links = document.querySelectorAll<HTMLElement>('[data-c]');
+  const set = (c: string | null) => links.forEach((el) => el.classList.toggle('on', !!c && el.dataset.c === c));
+  links.forEach((el) => {
+    el.addEventListener('mouseenter', () => set(el.dataset.c ?? null));
+    el.addEventListener('mouseleave', () => set(null));
+    el.addEventListener('focus', () => set(el.dataset.c ?? null));
+    el.addEventListener('blur', () => set(null));
+  });
+  map?.addEventListener('mouseleave', () => set(null));
+</script>

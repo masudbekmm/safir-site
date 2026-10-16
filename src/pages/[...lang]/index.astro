@@ -1,0 +1,148 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { langPaths, path, type Lang } from '../../i18n';
+import { company } from '../../data/company';
+import { home, nav, products, seo, ui } from '../../data/content';
+
+export function getStaticPaths() { return langPaths(); }
+const { lang } = Astro.props as { lang: Lang };
+---
+<Base lang={lang} page="" title={seo.home.title[lang]} description={seo.home.description[lang]} schema>
+  <!-- 1. Full-screen video hero. Replace public/video/hero.mp4 (+ hero-poster.jpg) with your own footage. -->
+  <section class="vhero on-dark">
+    <video class="vhero-video" autoplay muted loop playsinline preload="metadata" poster="/video/hero-poster.jpg" aria-hidden="true">
+      <source src="/video/hero.mp4" type="video/mp4" />
+    </video>
+    <div class="vhero-shade" aria-hidden="true"></div>
+    <div class="wrap vhero-inner">
+      <p class="vhero-slogan">{home.slogan[lang]}</p>
+      <h1 class="vhero-title">{home.title[lang]}</h1>
+    </div>
+    <a class="vhero-down" href="#introduction" aria-label={home.scroll[lang]}>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15m0 0l-6-6m6 6l6-6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+    </a>
+    <button class="vhero-toggle" type="button" data-play={home.playVideo[lang]} data-pause={home.pauseVideo[lang]} aria-label={home.pauseVideo[lang]}>
+      <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="2.4"/></svg>
+      <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z" fill="currentColor"/></svg>
+    </button>
+  </section>
+
+  <!-- 2. Intro: two-tone headline + photo -->
+  <section id="introduction" class="wrap intro">
+    <div class="intro-text reveal">
+      <h2 class="intro-title"><span>{home.introA[lang]}</span> <span class="muted">{home.introB[lang]}</span></h2>
+      <p>{home.lead[lang]}</p>
+      <a class="btn btn-dark" href={path(lang, 'about')}>{nav[2].label[lang]}</a>
+    </div>
+    <div class="intro-big reveal">
+      <Photo name="hero" alt="" tone="blue" sizes="(max-width: 880px) 100vw, 560px" widths={[480, 720, 960]} />
+    </div>
+  </section>
+
+  <!-- 3. Full-width production photo -->
+  <figure class="wide-photo reveal">
+    <Photo name="factory-floor" alt={home.floorAlt[lang]} tone="black" sizes="100vw" widths={[800, 1280, 1920, 2400]} />
+    <figcaption class="wrap">{home.floorCaption[lang]}</figcaption>
+  </figure>
+
+  <!-- 4. Products -->
+  <section class="section wrap">
+    <div class="split-head reveal">
+      <h2 class="big">{home.fabricsTitle[lang]}</h2>
+      <div>
+        <p class="lead">{home.fabricsLead[lang]}</p>
+        <a class="link-arrow" href={path(lang, 'products')}>{home.all[lang]} <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <ul class="cards">
+      {products.map((p, i) => (
+        <li class="reveal" style={`--d:${(i % 3) * 80}ms`}>
+          <a class="card" href={`${path(lang, 'products')}#${p.id}`}>
+            <div class="card-media">
+              <Photo name={`product-${p.id}`} alt="" tone={p.tone} sizes="(max-width: 700px) 100vw, 380px" widths={[380, 560, 760]} />
+            </div>
+            <h3>{p.name[lang]}</h3>
+            <p>{p.desc[lang]}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- 4b. Sustainability -->
+  <section id="sustainability" class="eco">
+    <div class="wrap section eco-grid">
+      <div class="eco-photo reveal">
+        <Photo name="sustainability" alt={home.eco.photoAlt[lang]} tone="blue" sizes="(max-width: 880px) 100vw, 560px" widths={[480, 720, 1000]} />
+      </div>
+      <div>
+        <div class="kicker reveal"><span>{home.eco.label[lang]}</span></div>
+        <h2 class="big reveal">{home.eco.title[lang]}</h2>
+        <p class="lead reveal">{home.eco.lead[lang]}</p>
+        <ul class="eco-list">
+          {home.eco.items.map((it, i) => (
+            <li class="reveal" style={`--d:${i * 110}ms`}>
+              <svg class="eco-icon" viewBox="0 0 48 48" aria-hidden="true">
+                {it.icon === 'leaf' && <><path pathLength="1" d="M10 38C10 20 22 10 40 9c0 18-10 30-28 29z"/><path pathLength="1" d="M10 38L28 20"/></>}
+                {it.icon === 'cotton' && <><circle pathLength="1" cx="18" cy="20" r="7"/><circle pathLength="1" cx="30" cy="20" r="7"/><circle pathLength="1" cx="24" cy="29" r="7"/><path pathLength="1" d="M24 36v8M17 42c3-3 11-3 14 0"/></>}
+                {it.icon === 'cut' && <><circle pathLength="1" cx="13" cy="35" r="5"/><circle pathLength="1" cx="35" cy="35" r="5"/><path pathLength="1" d="M16.5 31.5L36 8M31.5 31.5L12 8"/></>}
+                {it.icon === 'people' && <><circle pathLength="1" cx="17" cy="16" r="6"/><circle pathLength="1" cx="33" cy="18" r="5"/><path pathLength="1" d="M6 40c0-8 5-13 11-13s11 5 11 13M28 30c1.5-2 3-3 5-3 5 0 9 4 9 11"/></>}
+              </svg>
+              <h3>{it.t[lang]}</h3>
+              <p>{it.d[lang]}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Numbers (hidden until real numbers are set in company.ts) -->
+  {company.showStats && (
+    <section class="numbers on-dark">
+      <div class="wrap section">
+        <h2 class="big reveal">Safir</h2>
+        <ul class="stats">
+          {company.stats.map((s) => <li class="reveal"><strong>{s.value}</strong><span>{s.label[lang]}</span></li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- 6. Why Safir -->
+  <section class="section wrap why">
+    <h2 class="big reveal">{home.whyTitle[lang]}</h2>
+    <dl class="why-list">
+      {home.why.map((w) => <div class="reveal"><dt>{w.t[lang]}</dt><dd>{w.d[lang]}</dd></div>)}
+    </dl>
+  </section>
+
+  <!-- 7. How ordering works (dark band) -->
+  <section class="dark-band on-dark">
+    <div class="wrap section">
+      <h2 class="big reveal">{home.stepsTitle[lang]}</h2>
+      <ol class="steps">
+        {home.steps.map((s, i) => <li class="reveal" style={`--d:${i * 80}ms`}><h3>{s.t[lang]}</h3><p>{s.d[lang]}</p></li>)}
+      </ol>
+      <a class="btn btn-light-solid reveal" href="#contact">{ui.quote[lang]}</a>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Hero video: pause button, and respect "reduce motion"
+  const video = document.querySelector<HTMLVideoElement>('.vhero-video');
+  const btn = document.querySelector<HTMLButtonElement>('.vhero-toggle');
+  if (video && btn) {
+    const sync = () => {
+      btn.classList.toggle('paused', video.paused);
+      btn.setAttribute('aria-label', (video.paused ? btn.dataset.play : btn.dataset.pause) ?? '');
+    };
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) video.pause();
+    btn.addEventListener('click', () => { video.paused ? video.play() : video.pause(); });
+    video.addEventListener('play', sync);
+    video.addEventListener('pause', sync);
+    sync();
+  }
+</script>

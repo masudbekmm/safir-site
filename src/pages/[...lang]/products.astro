@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { langPaths, path, type Lang } from '../../i18n';
+import { products, productsPage, seo, ui } from '../../data/content';
+
+export function getStaticPaths() { return langPaths(); }
+const { lang } = Astro.props as { lang: Lang };
+---
+<Base lang={lang} page="products" title={seo.products.title[lang]} description={seo.products.description[lang]}>
+  <div class="wrap page-head">
+    <h1>{productsPage.title[lang]}</h1>
+    <p class="lead">{productsPage.lead[lang]}</p>
+    <div class="kicker"><span>Safir</span></div>
+  </div>
+  <div class="wrap" style="padding-top:clamp(2rem,5vw,3.5rem)">
+    <div class="catalog">
+      {products.map((p) => (
+        <article class="item" id={p.id}>
+          <div class="media">
+            <Photo name={`product-${p.id}`} alt={p.name[lang]} tone={p.tone} sizes="(max-width: 700px) 100vw, 560px" widths={[400, 560, 840]} />
+          </div>
+          <h2>{p.name[lang]}</h2>
+          <p>{p.desc[lang]}</p>
+          <a href="#contact">{ui.quote[lang]}</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</Base>

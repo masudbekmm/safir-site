@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+
+# Source material kept locally, not published (brand book, original photos)
+brand/
+*.pdf
+src/assets/photos/work_flow/

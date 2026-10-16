@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import { langs, path, navHref, type Lang } from '../i18n';
+import { company } from '../data/company';
+import { nav, ui } from '../data/content';
+
+interface Props { lang: Lang; page: string }
+const { lang, page } = Astro.props;
+
+import logo from '../assets/logo.png'; // horizontal lockup, brand blue (brand book p.02)
+import logoWhite from '../assets/logo-white.png'; // used over the home page video
+const overlay = page === ''; // home: header sits transparent over the hero video until you scroll
+---
+<header class:list={["site-header", { overlay }]}>
+  <div class="wrap bar">
+    <a class="brand" href={path(lang)} aria-label={`${company.name}: ${nav[0].label[lang]}`}>
+      <Image class="logo-color" src={logo} alt={company.name} height={96} densities={[1, 2]} loading="eager" />
+      {overlay && <Image class="logo-white" src={logoWhite} alt="" height={96} densities={[1, 2]} loading="eager" />}
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      {nav.map((n) => (
+        <a href={navHref(lang, n.key)} aria-current={n.key === page ? 'page' : undefined}>{n.label[lang]}</a>
+      ))}
+    </nav>
+
+    <div class="tools">
+      <ul class="langs" aria-label={ui.language[lang]}>
+        {langs.map((l) => (
+          <li><a href={path(l, page)} hreflang={l} lang={l} aria-current={l === lang ? 'true' : undefined}>{l.toUpperCase()}</a></li>
+        ))}
+      </ul>
+      <a class="tel" href={`tel:${company.phoneHref}`}>{company.phone}</a>
+    </div>
+
+    <details class="mobile-menu">
+      <summary>{ui.menu[lang]}</summary>
+      <div class="mobile-panel">
+        {nav.map((n) => <a class="link" href={navHref(lang, n.key)}>{n.label[lang]}</a>)}
+        <ul class="langs" aria-label={ui.language[lang]}>
+          {langs.map((l) => (
+            <li><a href={path(l, page)} hreflang={l} lang={l} aria-current={l === lang ? 'true' : undefined}>{l.toUpperCase()}</a></li>
+          ))}
+        </ul>
+      </div>
+    </details>
+  </div>
+</header>
+
+<script>
+  // Solid white header once the page is scrolled
+  const header = document.querySelector('.site-header');
+  const update = () => header?.classList.toggle('scrolled', window.scrollY > 40);
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+</script>

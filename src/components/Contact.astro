@@ -1,0 +1,46 @@
+---
+// Contact section shown at the end of every page (above the footer). The menu's "Contact" link jumps here.
+import type { Lang } from '../i18n';
+import { company } from '../data/company';
+import { contact, home } from '../data/content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const mapLang = { uz: 'uz_UZ', ru: 'ru_RU', en: 'en_US' } as const;
+---
+<section id="contact" class="contact-section">
+  <div class="wrap section">
+    <div class="kicker"><span>{contact.title[lang]}</span></div>
+    <div class="contact-grid">
+      <div>
+        <h2>{home.ctaTitle[lang]}</h2>
+        <p class="lead">{home.ctaText[lang]}</p>
+        <dl class="contact-list">
+          <div><dt>{contact.phone[lang]}</dt><dd><a href={`tel:${company.phoneHref}`}>{company.phone}</a><br /><a href={`tel:${company.phone2Href}`}>{company.phone2}</a></dd></div>
+          <div><dt>{contact.email[lang]}</dt><dd><a href={`mailto:${company.email}`}>{company.email}</a></dd></div>
+          <div><dt>{contact.address[lang]}</dt><dd>{company.address[lang]}</dd></div>
+        </dl>
+        <div class="actions">
+          <a class="btn btn-primary" href={company.telegram} target="_blank" rel="noopener">Telegram</a>
+          <a class="btn btn-ghost" href={company.whatsapp} target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+      <div>
+        <div class="map">
+          <iframe
+            title={contact.address[lang]}
+            src={`https://yandex.uz/map-widget/v1/?ll=${company.lng}%2C${company.lat}&z=15&pt=${company.lng}%2C${company.lat}%2Cpm2blm&lang=${mapLang[lang]}`}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <p class="map-links">
+          {contact.openMap[lang]}:{' '}
+          <a href={company.mapUrl} target="_blank" rel="noopener">Google Maps</a>
+          {' · '}
+          <a href={company.yandexUrl} target="_blank" rel="noopener">Yandex Maps</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://safir.uz/sitemap-index.xml
