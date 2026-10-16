@@ -15,17 +15,29 @@ const abs = (l: Lang) => company.url + path(l, page);
 const canonical = abs(lang);
 const ogImage = `${company.url}/og.jpg?v=2`; // bump ?v= when og.jpg changes so Telegram etc. refetch it
 
+// Company facts for Google (shown in its knowledge panel and rich results)
 const ld = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': `${company.url}/#org`,
   name: company.name,
+  alternateName: ['Safir', 'Safir Tekstil', company.legalName],
+  legalName: company.legalName,
+  description,
   url: company.url,
   logo: `${company.url}/logo.png`,
+  image: ogImage,
   email: company.email,
   telephone: company.phone,
-  address: { '@type': 'PostalAddress', addressCountry: 'UZ', addressRegion: 'Andijan', addressLocality: 'Jalaquduq' },
+  foundingDate: String(company.founded),
+  numberOfEmployees: { '@type': 'QuantitativeValue', value: 600 },
+  address: { '@type': 'PostalAddress', addressCountry: 'UZ', addressRegion: 'Andijan region', addressLocality: 'Jalaquduq district' },
   geo: { '@type': 'GeoCoordinates', latitude: company.lat, longitude: company.lng },
-  sameAs: [company.instagram, company.telegram],
+  hasMap: company.mapUrl,
+  areaServed: ['UZ', 'RU', 'KZ', 'UA'],
+  knowsAbout: ['textile manufacturing', 'garment manufacturing', 'knitwear', 'T-shirts', 'shirts', 'hoodies', 'sportswear', 'workwear', 'private label clothing'],
+  contactPoint: [{ '@type': 'ContactPoint', contactType: 'sales', telephone: company.phone, email: company.email, availableLanguage: ['uz', 'ru', 'en'] }],
+  // sameAs: add the real Instagram / Telegram links here once they exist (placeholder links would confuse Google)
 };
 ---
 <!doctype html>

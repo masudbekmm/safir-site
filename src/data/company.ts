@@ -2,7 +2,7 @@
 //  COMPANY DETAILS: edit everything marked TODO before launch.
 // ─────────────────────────────────────────────────────────────
 export const company = {
-  name: 'Safir',
+  name: 'Safir Textile', // the brand as people search for it (logo alt text, © line, Google data)
   url: 'https://safir.uz',
 
   // TODO: real contact details

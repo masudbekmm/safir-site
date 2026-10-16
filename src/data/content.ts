@@ -31,32 +31,42 @@ export const nav = [
 ];
 
 export const seo = {
+  // Titles and descriptions are what Google shows in results. They name "Safir Textile", "tekstil" and Andijan
+  // so the site can come up for searches like "safir textile", "tekstil Andijon" or "текстиль Узбекистан".
   home: {
     title: {
-      uz: 'Safir — tikuv-trikotaj mahsulotlari ishlab chiqaruvchisi | O‘zbekiston',
-      ru: 'Safir — производитель швейно-трикотажной продукции | Узбекистан',
-      en: 'Safir — Garment Manufacturer in Uzbekistan | T-shirts, Shirts',
+      uz: 'Safir Textile — Andijondagi tekstil va tikuv-trikotaj fabrikasi',
+      ru: 'Safir Textile — текстильная фабрика в Андижане, Узбекистан',
+      en: 'Safir Textile — Textile & Garment Manufacturer in Uzbekistan',
     } as L,
     description: {
-      uz: 'Safir — Andijon viloyatidagi tikuv-trikotaj korxonasi. Eksport uchun futbolka, ko‘ylak va boshqa kiyimlar ishlab chiqaramiz. Namuna va narxlarni so‘rang.',
-      ru: 'Safir — швейно-трикотажное производство в Андижанской области. Шьём футболки, рубашки и другую одежду на экспорт. Запросите образцы и цены.',
-      en: 'Safir is a garment manufacturer in Andijan, Uzbekistan, producing T-shirts, shirts and other clothing for export buyers. Request samples and prices.',
+      uz: 'Safir Textile — Andijon viloyatidagi tekstil va tikuv-trikotaj fabrikasi. Eksport uchun futbolka, ko‘ylak, xudi va boshqa kiyimlar ishlab chiqaramiz. Namuna va narxlarni so‘rang.',
+      ru: 'Safir Textile — текстильная и швейно-трикотажная фабрика в Андижанской области, Узбекистан. Шьём футболки, рубашки, худи и другую одежду на экспорт. Запросите образцы и цены.',
+      en: 'Safir Textile is a textile and garment manufacturer in Andijan, Uzbekistan, making T-shirts, shirts, hoodies and other clothing for export buyers. Request samples and prices.',
     } as L,
   },
   products: {
-    title: { uz: 'Mahsulotlar | Safir', ru: 'Продукция | Safir', en: 'Products | Safir' } as L,
+    title: {
+      uz: 'Tekstil mahsulotlari: futbolka, ko‘ylak, xudi | Safir Textile',
+      ru: 'Текстильная продукция: футболки, рубашки, худи | Safir Textile',
+      en: 'Textile Products: T-shirts, Shirts, Hoodies | Safir Textile',
+    } as L,
     description: {
-      uz: 'Safir mahsulotlari: futbolka va polo, ko‘ylaklar, xudi, bolalar kiyimi, sport kiyimi va ish kiyimi. Eksport buyurtmalari uchun namuna va narxlarni so‘rang.',
-      ru: 'Продукция Safir: футболки и поло, рубашки, худи, детская, спортивная одежда и спецодежда. Образцы и цены для экспортных заказов по запросу.',
-      en: 'Safir products: T-shirts and polos, shirts, hoodies, children’s wear, sportswear and workwear. Request samples and prices for export orders.',
+      uz: 'Safir Textile mahsulotlari: futbolka va polo, ko‘ylaklar, xudi, bolalar kiyimi, sport kiyimi va ish kiyimi. Andijonda tikiladi. Eksport buyurtmalari uchun namuna va narxlarni so‘rang.',
+      ru: 'Продукция Safir Textile: футболки и поло, рубашки, худи, детская, спортивная одежда и спецодежда. Шьём в Андижане. Образцы и цены для экспортных заказов по запросу.',
+      en: 'Safir Textile products: T-shirts and polos, shirts, hoodies, children’s wear, sportswear and workwear, sewn in Andijan, Uzbekistan. Request samples and prices for export orders.',
     } as L,
   },
   about: {
-    title: { uz: 'Kompaniya haqida | Safir', ru: 'О компании | Safir', en: 'About us | Safir' } as L,
+    title: {
+      uz: 'Biz haqimizda — Andijondagi tekstil fabrikasi | Safir Textile',
+      ru: 'О компании — текстильная фабрика в Андижане | Safir Textile',
+      en: 'About Safir Textile — Textile Factory in Andijan, Uzbekistan',
+    } as L,
     description: {
-      uz: 'Safir — Andijon viloyatidagi tikuv-trikotaj korxonasi. Eksport xaridorlari uchun kiyim ishlab chiqaramiz.',
-      ru: 'Safir — швейно-трикотажное производство в Андижанской области. Производим одежду для экспортных покупателей.',
-      en: 'Safir is a garment manufacturer in Andijan region, Uzbekistan, making clothing for export buyers.',
+      uz: 'Safir Textile — 2018-yildan Andijon viloyatidagi tekstil fabrikasi: ~600 xodim, 20 tikuv konveyeri, oyiga 600 000 dona mahsulot. Eksport xaridorlari uchun kiyim ishlab chiqaramiz.',
+      ru: 'Safir Textile — текстильная фабрика в Андижанской области с 2018 года: ~600 сотрудников, 20 швейных конвейеров, 600 000 изделий в месяц. Производим одежду на экспорт.',
+      en: 'Safir Textile has been a textile factory in Andijan region, Uzbekistan, since 2018: ~600 employees, 20 sewing lines, 600,000 items a month. We make clothing for export buyers.',
     } as L,
   },
 };
